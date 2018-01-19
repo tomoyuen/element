@@ -26,6 +26,7 @@ export default {
       if (this.picker) {
         this.unmountPicker();
         this.panel = getPanel(type);
+        this.panel.future = this.picker.future;
         this.mountPicker();
       } else {
         this.panel = getPanel(type);

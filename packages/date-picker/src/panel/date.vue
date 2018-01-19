@@ -19,7 +19,7 @@
             v-for="shortcut in shortcuts"
             @click="handleShortcutClick(shortcut)">{{ shortcut.text }}</button>
         </div>
-        <div class="el-picker-panel__body">
+        <div class="el-picker-panel__body" v-if="future">
           <div class="el-date-picker__time-header" v-if="showTime">
             <span class="el-date-picker__editor-wrap">
               <el-input
@@ -78,35 +78,54 @@
               class="el-picker-panel__icon-btn el-date-picker__next-btn el-icon-arrow-right">
             </button>
           </div>
-
-          <div class="el-picker-panel__content">
-            <date-table
-              v-show="currentView === 'date'"
-              @pick="handleDatePick"
-              :year="year"
-              :month="month"
-              :date="date"
-              :week="week"
-              :selection-mode="selectionMode"
-              :first-day-of-week="firstDayOfWeek"
-              :disabled-date="disabledDate">
-            </date-table>
-            <year-table
-              ref="yearTable"
-              :year="year"
-              :date="date"
-              v-show="currentView === 'year'"
-              @pick="handleYearPick"
-              :disabled-date="disabledDate">
-            </year-table>
-            <month-table
-              :month="month"
-              :date="date"
-              v-show="currentView === 'month'"
-              @pick="handleMonthPick"
-              :disabled-date="disabledDate">
-            </month-table>
-          </div>
+        </div>
+        <div class="el-picker-panel__content" v-if="future">
+          <date-table
+            v-show="currentView === 'date'"
+            @pick="handleDatePick"
+            :year="year"
+            :month="month"
+            :date="date"
+            :week="week"
+            :selection-mode="selectionMode"
+            :first-day-of-week="firstDayOfWeek"
+            :disabled-date="disabledDate">
+          </date-table>
+          <year-table
+            ref="yearTable"
+            :year="year"
+            :date="date"
+            v-show="currentView === 'year'"
+            @pick="handleYearPick"
+            :disabled-date="disabledDate">
+          </year-table>
+          <month-table
+            :month="month"
+            :date="date"
+            v-show="currentView === 'month'"
+            @pick="handleMonthPick"
+            :disabled-date="disabledDate">
+          </month-table>
+        </div>
+        <div class="el-time-panel__content has-seconds" v-else>
+          <date-spinner
+            ref="dateSpinner"
+            @change="handleChange"
+            @select-range="setSelectionRange"
+            :years="year"
+            :months="month"
+            :dates="date.getDate()">
+          </date-spinner>
+        </div>
+        <div class="el-time-panel__footer" v-if="!future">
+          <button
+            type="button"
+            class="el-time-panel__btn cancel"
+            @click="handleCancel">{{ t('el.datepicker.cancel') }}</button>
+          <button
+            type="button"
+            class="el-time-panel__btn confirm"
+            @click="handleConfirm()">{{ t('el.datepicker.confirm') }}</button>
         </div>
       </div>
 
@@ -162,6 +181,9 @@
           this.year = newVal.getFullYear();
           this.month = newVal.getMonth();
           this.$emit('pick', newVal, true);
+          this.$nextTick(_ => {
+            this.ajustScrollTop();
+          });
         }
       },
 
@@ -188,8 +210,25 @@
     },
 
     methods: {
+      setSelectionRange(start, end) {
+        this.$emit('select-range', start, end);
+      },
       handleClear() {
         this.date = this.$options.defaultValue ? new Date(this.$options.defaultValue) : new Date();
+        this.$emit('pick');
+      },
+      handleChange(date) {
+        this.date = date;
+        this.year = date.getFullYear();
+        this.month = date.getMonth();
+
+        this.handleConfirm(true);
+      },
+      handleConfirm(visible = false, first) {
+        if (first) return;
+        this.$emit('pick', this.date, visible, first);
+      },
+      handleCancel() {
         this.$emit('pick');
       },
 
@@ -292,13 +331,13 @@
       handleDatePick(value) {
         if (this.selectionMode === 'day') {
           if (!this.showTime) {
-            this.$emit('pick', new Date(value.getTime()));
+            this.$emit('pick', new Date(value.getTime()), !this.future);
           }
           this.date.setFullYear(value.getFullYear());
           this.date.setMonth(value.getMonth(), value.getDate());
         } else if (this.selectionMode === 'week') {
           this.week = value.week;
-          this.$emit('pick', value.date);
+          this.$emit('pick', value.date, !this.future);
         }
 
         this.resetDate();
@@ -341,11 +380,16 @@
           this.year = this.date.getFullYear();
           this.month = this.date.getMonth();
         }
+      },
+
+      ajustScrollTop() {
+        return this.$refs.dateSpinner.ajustScrollTop();
       }
     },
 
     components: {
-      TimePicker, YearTable, MonthTable, DateTable, ElInput
+      TimePicker, YearTable, MonthTable, DateTable, ElInput,
+      DateSpinner: require('../basic/date-spinner')
     },
 
     mounted() {
@@ -374,7 +418,8 @@
         showWeekNumber: false,
         timePickerVisible: false,
         width: 0,
-        format: ''
+        format: '',
+        future: true
       };
     },
 
@@ -448,3 +493,12 @@
     }
   };
 </script>
+
+<style>
+.el-date-picker {
+  .el-time-panel__content::after,
+  .el-time-panel__content::before {
+    content: '-';
+  }
+}
+</style>

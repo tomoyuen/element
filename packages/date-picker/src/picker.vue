@@ -209,7 +209,11 @@ export default {
     rangeSeparator: {
       default: ' - '
     },
-    pickerOptions: {}
+    pickerOptions: {},
+    future: {
+      type: Boolean,
+      default: true
+    }
   },
 
   components: { ElInput },
@@ -437,6 +441,7 @@ export default {
       this.popperElm = this.picker.$el;
       this.picker.width = this.reference.getBoundingClientRect().width;
       this.picker.showTime = this.type === 'datetime' || this.type === 'datetimerange';
+      this.picker.future = this.future;
       this.picker.selectionMode = this.selectionMode;
       if (this.format) {
         this.picker.format = this.format;
