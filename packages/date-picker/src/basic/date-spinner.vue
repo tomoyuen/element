@@ -54,45 +54,47 @@
   import ElScrollbar from 'element-ui/packages/scrollbar';
   import debounce from 'throttle-debounce/debounce';
 
+  const currentDate = new Date();
+
   export default {
     components: { ElScrollbar },
 
     props: {
       years: {
         type: Number,
-        default: new Date().getFullYear()
+        default: currentDate.getFullYear()
       },
 
       months: {
         type: Number,
-        default: new Date().getMonth()
+        default: currentDate.getMonth()
       },
 
       dates: {
         type: Number,
-        default: new Date().getDate()
+        default: currentDate.getDate()
       }
     },
 
     watch: {
       yearsPrivate(newVal, oldVal) {
-        if (!(newVal >= new Date().getFullYear() - 150 && newVal <= new Date().getFullYear())) {
+        if (!(newVal >= currentDate.getFullYear() - 150 && newVal <= currentDate.getFullYear())) {
           this.yearsPrivate = oldVal;
         }
         this.ajustElTop('year', newVal);
-        this.$emit('change', new Date(newVal, this.monthsPrivate, this.datesPrivate));
+        this.$emit('change', new Date(newVal, this.months, this.adjustDates(newVal, this.months)));
       },
 
       monthsPrivate(newVal, oldVal) {
-        if (!(newVal > 0 && newVal <= 12)) {
+        if (!(newVal >= 0 && newVal < 12)) {
           this.monthsPrivate = oldVal;
         }
         this.ajustElTop('month', newVal);
-        this.$emit('change', new Date(this.yearsPrivate, newVal, this.datesPrivate));
+        this.$emit('change', new Date(this.yearsPrivate, newVal, this.adjustDates(this.years, newVal)));
       },
 
       datesPrivate(newVal, oldVal) {
-        if (!(newVal >= 0 && newVal <= 59)) {
+        if (!(newVal > 0 && newVal <= 59)) {
           this.datesPrivate = oldVal;
         }
         this.ajustElTop('date', newVal);
@@ -102,7 +104,7 @@
 
     computed: {
       yearsList() {
-        return range(new Date().getFullYear() - 150, new Date().getFullYear() + 1);
+        return range(currentDate.getFullYear() - 150, currentDate.getFullYear() + 1);
       },
 
       yearEl() {
@@ -118,7 +120,7 @@
       },
 
       datesList() {
-        const totalDays = new Date(new Date(this.years, this.months + 1, 1) - 1).getDate();
+        const totalDays = this.getDaysByMonthAndYear(this.years, this.months);
         if (this.dates > totalDays) {
           this.ajustElTop('date', totalDays);
         }
@@ -128,10 +130,10 @@
 
     data() {
       return {
-        yearsPrivate: new Date().getFullYear(),
-        monthsPrivate: new Date().getMonth(),
-        datesPrivate: new Date().getDate(),
-        selectableRange: range(new Date().getFullYear() - 150, new Date().getFullYear())
+        yearsPrivate: currentDate.getFullYear(),
+        monthsPrivate: currentDate.getMonth(),
+        datesPrivate: currentDate.getDate(),
+        selectableRange: range(currentDate.getFullYear() - 150, currentDate.getFullYear())
       };
     },
 
@@ -146,6 +148,17 @@
     },
 
     methods: {
+      getDaysByMonthAndYear(year, month) {
+        return new Date(new Date(year, month + 1, 1) - 1).getDate();
+      },
+      adjustDates(year, month) {
+        const totalDates = this.getDaysByMonthAndYear(year, month);
+        const date = this.dates > totalDates ? totalDates : this.dates;
+        if (date !== this.dates) {
+          this.ajustElTop('date', date);
+        }
+        return date;
+      },
       handleClick(type, value, disabled) {
         if (value.disabled) {
           return;
@@ -176,9 +189,12 @@
       },
 
       handleScroll(type) {
-        const year = Math.min(Math.floor((this.yearEl.scrollTop - 80) / 32 + 3 + this.yearsList[0]), new Date().getFullYear());
+        const year = Math.min(Math.floor((this.yearEl.scrollTop - 80) / 32 + 3 + this.yearsList[0]), currentDate.getFullYear());
         const month = Math.min(Math.floor((this.monthEl.scrollTop - 80) / 32 + 3), 12);
-        const date = Math.min(Math.floor((this.dateEl.scrollTop - 80) / 32 + 3 + this.datesList[0]), this.datesList[this.datesList.length - 1]);
+        let date = Math.min(Math.floor((this.dateEl.scrollTop - 80) / 32 + 3 + this.datesList[0]), this.datesList[this.datesList.length - 1]);
+        if (type !== 'date') {
+          date = this.adjustDates(year, month);
+        }
         this.debounceAjustElTop(type);
         this.$emit('change', new Date(year, month, date));
       },
