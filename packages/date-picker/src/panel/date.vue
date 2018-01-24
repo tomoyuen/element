@@ -383,7 +383,7 @@
       },
 
       ajustScrollTop() {
-        return this.$refs.dateSpinner.ajustScrollTop();
+        return this.$refs.dateSpinner && this.$refs.dateSpinner.ajustScrollTop();
       }
     },
 
