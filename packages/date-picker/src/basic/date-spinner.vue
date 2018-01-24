@@ -164,7 +164,9 @@
           return;
         }
 
-        this[type + 'Private'] = value.value > 0 ? value.value : value;
+        const threshold = type === 'months' ? -1 : 0;
+
+        this[type + 'Private'] = value.value > threshold ? value.value : value;
 
         this.emitSelectRange(type);
       },

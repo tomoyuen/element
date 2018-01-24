@@ -116,6 +116,16 @@
     </el-date-picker>
   </div>
   <div class="block">
+    <span class="demonstration">过去时间选择器</span>
+    <el-date-picker
+      v-model="value1"
+      type="date"
+      :future="false"
+      placeholder="选择日期"
+      :picker-options="pickerOptions0">
+    </el-date-picker>
+  </div>
+  <div class="block">
     <span class="demonstration">带快捷选项</span>
     <el-date-picker
       v-model="value2"
