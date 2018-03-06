@@ -98,15 +98,13 @@
 
       isGroup() {
         let parent = this.$parent;
-        while (parent) {
-          if (parent.$options.componentName !== 'ElCheckboxGroup') {
-            parent = parent.$parent;
-          } else {
-            this._checkboxGroup = parent;
-            return true;
-          }
+        if (parent.$options.componentName !== 'ElCheckboxGroup') {
+          parent = parent.$parent;
+          return false;
+        } else {
+          this._checkboxGroup = parent;
+          return true;
         }
-        return false;
       },
 
       store() {
