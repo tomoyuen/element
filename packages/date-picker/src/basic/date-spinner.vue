@@ -130,9 +130,9 @@
 
     data() {
       return {
-        yearsPrivate: currentDate.getFullYear(),
-        monthsPrivate: currentDate.getMonth(),
-        datesPrivate: currentDate.getDate(),
+        yearsPrivate: this.years || currentDate.getFullYear(),
+        monthsPrivate: this.months || currentDate.getMonth(),
+        datesPrivate: this.dates || currentDate.getDate(),
         selectableRange: range(currentDate.getFullYear() - 150, currentDate.getFullYear())
       };
     },
