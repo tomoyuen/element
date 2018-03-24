@@ -112,8 +112,8 @@
             ref="dateSpinner"
             @change="handleChange"
             @select-range="setSelectionRange"
-            :years="year"
-            :months="month"
+            :years="date.getFullYear()"
+            :months="date.getMonth()"
             :dates="date.getDate()">
           </date-spinner>
         </div>
@@ -404,6 +404,8 @@
         popperClass: '',
         pickerWidth: 0,
         date: this.$options.defaultValue ? new Date(this.$options.defaultValue) : new Date(),
+        year: null,
+        month: null,
         value: '',
         showTime: false,
         selectionMode: 'day',
@@ -412,8 +414,6 @@
         currentView: 'date',
         disabledDate: '',
         firstDayOfWeek: 7,
-        year: null,
-        month: null,
         week: null,
         showWeekNumber: false,
         timePickerVisible: false,
