@@ -91,18 +91,18 @@
 </template>
 
 <script type="text/babel">
-  import Emitter from 'element-ui/src/mixins/emitter';
-  import Locale from 'element-ui/src/mixins/locale';
-  import ElInput from 'element-ui/packages/input';
+  import Emitter from 'element-ui-custom-ac/src/mixins/emitter';
+  import Locale from 'element-ui-custom-ac/src/mixins/locale';
+  import ElInput from 'element-ui-custom-ac/packages/input';
   import ElSelectMenu from './select-dropdown.vue';
   import ElOption from './option.vue';
-  import ElTag from 'element-ui/packages/tag';
-  import ElScrollbar from 'element-ui/packages/scrollbar';
+  import ElTag from 'element-ui-custom-ac/packages/tag';
+  import ElScrollbar from 'element-ui-custom-ac/packages/scrollbar';
   import debounce from 'throttle-debounce/debounce';
-  import Clickoutside from 'element-ui/src/utils/clickoutside';
-  import { addClass, removeClass, hasClass } from 'element-ui/src/utils/dom';
-  import { addResizeListener, removeResizeListener } from 'element-ui/src/utils/resize-event';
-  import { t } from 'element-ui/src/locale';
+  import Clickoutside from 'element-ui-custom-ac/src/utils/clickoutside';
+  import { addClass, removeClass, hasClass } from 'element-ui-custom-ac/src/utils/dom';
+  import { addResizeListener, removeResizeListener } from 'element-ui-custom-ac/src/utils/resize-event';
+  import { t } from 'element-ui-custom-ac/src/locale';
   const sizeMap = {
     'large': 42,
     'small': 30,

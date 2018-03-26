@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import { PopupManager } from 'element-ui/src/utils/popup';
-import { isVNode } from 'element-ui/src/utils/vdom';
+import { PopupManager } from 'element-ui-custom-ac/src/utils/popup';
+import { isVNode } from 'element-ui-custom-ac/src/utils/vdom';
 let NotificationConstructor = Vue.extend(require('./main.vue'));
 
 let instance;

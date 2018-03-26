@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import loadingVue from './loading.vue';
-import merge from 'element-ui/src/utils/merge';
+import merge from 'element-ui-custom-ac/src/utils/merge';
 
 const LoadingConstructor = Vue.extend(loadingVue);
 

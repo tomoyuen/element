@@ -5,9 +5,9 @@
     "utils": {
       "plugins": [
         ["module-resolver", {
-          "root": ["element-ui"],
+          "root": ["element-ui-custom-ac"],
           "alias": {
-            "element-ui/src": "element-ui/lib"
+            "element-ui-custom-ac/src": "element-ui-custom-ac/lib"
           }
         }]
       ]

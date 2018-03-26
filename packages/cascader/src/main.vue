@@ -56,12 +56,12 @@
 <script>
 import Vue from 'vue';
 import ElCascaderMenu from './menu';
-import ElInput from 'element-ui/packages/input';
-import Popper from 'element-ui/src/utils/vue-popper';
-import Clickoutside from 'element-ui/src/utils/clickoutside';
-import emitter from 'element-ui/src/mixins/emitter';
-import Locale from 'element-ui/src/mixins/locale';
-import { t } from 'element-ui/src/locale';
+import ElInput from 'element-ui-custom-ac/packages/input';
+import Popper from 'element-ui-custom-ac/src/utils/vue-popper';
+import Clickoutside from 'element-ui-custom-ac/src/utils/clickoutside';
+import emitter from 'element-ui-custom-ac/src/mixins/emitter';
+import Locale from 'element-ui-custom-ac/src/mixins/locale';
+import { t } from 'element-ui-custom-ac/src/locale';
 import debounce from 'throttle-debounce/debounce';
 
 const popperMixin = {

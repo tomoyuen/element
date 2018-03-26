@@ -17,7 +17,7 @@
 </template>
 
 <script type="text/babel">
-  import ElScrollbar from 'element-ui/packages/scrollbar';
+  import ElScrollbar from 'element-ui-custom-ac/packages/scrollbar';
 
   const parseTime = function(time) {
     const values = ('' || time).split(':');

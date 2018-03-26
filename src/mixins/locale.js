@@ -1,4 +1,4 @@
-import { t } from 'element-ui/src/locale';
+import { t } from 'element-ui-custom-ac/src/locale';
 
 export default {
   methods: {

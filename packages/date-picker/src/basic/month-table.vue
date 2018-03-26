@@ -48,8 +48,8 @@
 </template>
 
 <script type="text/babel">
-  import Locale from 'element-ui/src/mixins/locale';
-  import { hasClass } from 'element-ui/src/utils/dom';
+  import Locale from 'element-ui-custom-ac/src/mixins/locale';
+  import { hasClass } from 'element-ui-custom-ac/src/utils/dom';
 
   export default {
     props: {

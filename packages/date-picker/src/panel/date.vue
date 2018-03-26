@@ -147,8 +147,8 @@
 
 <script type="text/babel">
   import { formatDate, parseDate, getWeekNumber } from '../util';
-  import Locale from 'element-ui/src/mixins/locale';
-  import ElInput from 'element-ui/packages/input';
+  import Locale from 'element-ui-custom-ac/src/mixins/locale';
+  import ElInput from 'element-ui-custom-ac/packages/input';
   import TimePicker from './time';
   import YearTable from '../basic/year-table';
   import MonthTable from '../basic/month-table';

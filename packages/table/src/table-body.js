@@ -1,7 +1,7 @@
 import { getCell, getColumnByCell, getRowIdentity } from './util';
-import { hasClass } from 'element-ui/src/utils/dom';
-import ElCheckbox from 'element-ui/packages/checkbox';
-import ElTooltip from 'element-ui/packages/tooltip';
+import { hasClass } from 'element-ui-custom-ac/src/utils/dom';
+import ElCheckbox from 'element-ui-custom-ac/packages/checkbox';
+import ElTooltip from 'element-ui-custom-ac/packages/tooltip';
 import debounce from 'throttle-debounce/debounce';
 
 export default {

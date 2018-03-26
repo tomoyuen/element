@@ -16,7 +16,7 @@
 </template>
 
 <script type="text/babel">
-  import Emitter from 'element-ui/src/mixins/emitter';
+  import Emitter from 'element-ui-custom-ac/src/mixins/emitter';
 
   export default {
     mixins: [Emitter],

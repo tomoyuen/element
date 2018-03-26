@@ -9,7 +9,7 @@
   </ul>
 </template>
 <script>
-  import emitter from 'element-ui/src/mixins/emitter';
+  import emitter from 'element-ui-custom-ac/src/mixins/emitter';
 
   export default {
     name: 'ElMenu',

@@ -52,7 +52,7 @@
 
 <script type="text/babel">
   import { getRangeHours } from '../util';
-  import ElScrollbar from 'element-ui/packages/scrollbar';
+  import ElScrollbar from 'element-ui-custom-ac/packages/scrollbar';
   import debounce from 'throttle-debounce/debounce';
 
   export default {
